@@ -1,6 +1,6 @@
-FROM openkbs/jre-mvn-py
+FROM openkbs/jre-mvn-py3
 
-MAINTAINER OpenKBS 
+MAINTAINER OpenKBS <DrSnowbird@openkbs.org>
 
 ENV SERVERS_HOME=/usr
 

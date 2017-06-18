@@ -1,16 +1,13 @@
-# Java 8 (1.8.0_92) JRE server + Maven 3.3.9 + Python 2.7.11
+# Java 8 (1.8.0_131) JRE server + Maven 3.5.0 + Python 3.5.2
 
 [![](https://imagelayers.io/badge/openkbs/openrefine:1.0.0.svg)](https://imagelayers.io/?images=openkbs/openrefine:1.0.0 'Get your own badge on imagelayers.io')
 
 Components:
 
-* openrefine 2.1.2 service at http://<server_ip:9999>/
-* OpenRefine 2.6.2rc http://<server_ip:3333>/
-* Oracle Java "1.8.0_92" JRE Runtime Environment for Server
-  Java(TM) SE Runtime Environment (build 1.8.0_92-b14)
-  Java HotSpot(TM) 64-Bit Server VM (build 25.92-b14, mixed mode)
-* Apache Maven 3.3.9
-* Python 2.7.11
+* OpenRefine 2.7-rc.2 http://<server_ip:3333>/
+* Oracle Java "1.8.0_131" JRE Runtime Environment for Server
+* Apache Maven 3.5.0
+* Python 3.5.2
 * Other tools: git wget unzip vim python python-setuptools python-dev python-numpy 
 
 ## Pull the image from Docker Repository
