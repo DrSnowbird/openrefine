@@ -47,11 +47,11 @@ echo "---------------------------------------------"
 echo "---- Starting a Container for ${imageTag}"
 echo "---------------------------------------------"
 #docker run --rm -P -d --name $instanceName $imageTag
-docker run \
-    --detach \
+docker run --rm \
+    -d \
     --name=${instanceName} \
-    --publish ${local_docker_port1}:${docker_port1} \
-    --volume=${local_docker_data}:${docker_volume_data} \
+    -p ${local_docker_port1}:${docker_port1} \
+    -v ${local_docker_data}:${docker_volume_data} \
     ${imageTagString} 
     
 
