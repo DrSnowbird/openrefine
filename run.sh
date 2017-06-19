@@ -35,7 +35,7 @@ fi
 instanceName=my-${2:-${imageTag##*/}}
 
 #### ---- instance local data on the host ----
-local_docker_data=~/docker-data/${PACKAGE}/data
+local_docker_data=~/data-docker/${PACKAGE}/data
 mkdir -p ${local_docker_data}
 
 MY_IP=`ip route get 1|awk '{print $NF;exit;}'`
@@ -47,7 +47,9 @@ echo "---------------------------------------------"
 echo "---- Starting a Container for ${imageTag}"
 echo "---------------------------------------------"
 #docker run --rm -P -d --name $instanceName $imageTag
+
 docker run \
+    --rm \
     --detach \
     --name=${instanceName} \
     --publish ${local_docker_port1}:${docker_port1} \
