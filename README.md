@@ -1,11 +1,11 @@
-# Java 8 (1.8.0_131) JRE server + Maven 3.5.0 + Python 3.5.2
+# Java 8 (1.8.0_141) JRE server + Maven 3.5.0 + Python 3.5.2
 
 [![](https://imagelayers.io/badge/openkbs/openrefine:1.0.0.svg)](https://imagelayers.io/?images=openkbs/openrefine:1.0.0 'Get your own badge on imagelayers.io')
 
 Components:
 
 * OpenRefine 2.7-rc.2 http://<server_ip:3333>/
-* Oracle Java "1.8.0_131" JRE Runtime Environment for Server
+* Oracle Java "1.8.0_141" JRE Runtime Environment for Server
 * Apache Maven 3.5.0
 * Python 3.5.2
 * Other tools: git wget unzip vim python python-setuptools python-dev python-numpy 
