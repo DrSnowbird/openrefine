@@ -1,0 +1,20 @@
+version: '3' 
+services:
+  openrefine:
+    image: openkbs/openrefine
+    build:
+      context: ./Dockerfile
+    container_name: openrefine
+    environment:
+      - USER_ID=${USER_ID:-1000}
+      - GROUP_ID=${GROUP_ID:-1000}
+      - OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM:-8192M}
+    env_file:
+      - ./docker.env
+    ports:
+      - 3333:3333
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ${HOME}/.atom-docker:/home/developer/.atom-docker
+      - ${HOME}/data-docker/openrefine/workspace:/home/developer/workspace
+

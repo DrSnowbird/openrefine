@@ -15,8 +15,10 @@ function displayPortainerURL() {
     echo "... Go to: http://${MY_IP}:${port}"
     #firefox http://${MY_IP}:${port} &
     if [ "`which google-chrome`" != "" ]; then
+        echo "... Use Google-Chrome ..."
         /usr/bin/google-chrome http://${MY_IP}:${port} &
     else
+        echo "... Use Firefox ..."
         firefox http://${MY_IP}:${port} &
     fi
 }
@@ -60,10 +62,12 @@ echo "---------------------------------------------"
 echo "---- Starting a Container for ${imageTag}"
 echo "---------------------------------------------"
 
+OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM:-8192M}
 set -x
 docker run --rm \
     -d \
     --name=${instanceName} \
+    -e OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM} \
     -p ${local_docker_port1}:${docker_port1} \
     -v ${local_docker_data1}:${docker_volume_data1} \
     ${imageTag}
@@ -76,5 +80,6 @@ echo ">>> Docker Shell into Container `docker ps -lqa`"
 echo "docker exec -it ${instanceName} /bin/bash"
 
 #### ---- Display IP:Port URL ----
+sleep 6
 displayPortainerURL ${local_docker_port1}
 
