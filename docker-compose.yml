@@ -8,7 +8,7 @@ services:
     environment:
       - USER_ID=${USER_ID:-1000}
       - GROUP_ID=${GROUP_ID:-1000}
-      - OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM:-8192M}
+      - OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM:-16384M}
     env_file:
       - ./docker.env
     ports:

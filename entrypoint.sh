@@ -10,7 +10,7 @@
 
 #chown -R www-data:www-data /var/www/html
 
-OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM:-8192M}
+OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM:-16384M}
 #exec "${OPENREFINE_HOME}/refine -i 0.0.0.0 -m ${OPENREFINE_VM_MAX_MEM}"
 
 exec "$@"

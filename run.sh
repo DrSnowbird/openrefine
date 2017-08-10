@@ -62,7 +62,7 @@ echo "---------------------------------------------"
 echo "---- Starting a Container for ${imageTag}"
 echo "---------------------------------------------"
 
-OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM:-8192M}
+OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM:-16384M}
 set -x
 docker run --rm \
     -d \
