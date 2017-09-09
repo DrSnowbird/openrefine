@@ -6,7 +6,7 @@ MAINTAINER OpenKBS <DrSnowbird@openkbs.org>
 #### ---- Environment Vars ----
 ################################
 
-ARG OPENREFINE_VER=${OPENREFINE_VER:-"2.7-rc.2"}
+ARG OPENREFINE_VER=${OPENREFINE_VER}
 ARG OPENREFINE_PORT=${OPENREFINE_PORT:-3333}
 ARG DATA_DIR=${DATA_DIR:-/data}
 ARG OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM:-16384M}
@@ -23,6 +23,7 @@ ENV SERVERS_HOME=/usr
 ################################
 
 ## -- ref: https://github.com/OpenRefine/OpenRefine/releases/
+## https://github.com/OpenRefine/OpenRefine/releases/download/2.7/openrefine-linux-2.7.tar.gz
 ENV OPENREFINE_URL https://github.com/OpenRefine/OpenRefine/releases/download/${OPENREFINE_VER}/openrefine-linux-${OPENREFINE_VER}.tar.gz
 ENV NER_EXTENSION_URL http://software.freeyourmetadata.org/ner-extension/ner-extension.zip
 

@@ -9,15 +9,17 @@
 
 imageTag=openkbs/openrefine
 #version=1.0.0
+OPENREFINE_VER=2.7
+BUILD_ARGS="--build-arg OPENREFINE_VER=${OPENREFINE_VER}"
 
 if [ ! "$version" == "" ]; then
-    docker build -t ${imageTag}:$version -t ${imageTag}:latest .
+    docker build -t ${imageTag}:$version -t ${imageTag}:latest ${BUILD_ARGS} .
     echo "---> To run in interactive mode: "
     echo "docker run --name <some-name> -it ${imageTag}:$version /bin/bash"
     echo "e.g."
     echo "docker run --name "my_${imageTag//\//_}" it ${imageTag}:$version /bin/bash"
 else
-    docker build -t ${imageTag} .
+    docker build -t ${imageTag} ${BUILD_ARGS} .
     echo "---> To run in interactive mode: "
     echo "docker run --name <some-name> -it ${imageTag} /bin/bash"
     echo "e.g."
