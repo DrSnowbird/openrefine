@@ -5,7 +5,7 @@
 Components:
 
 * OpenRefine 2.7-rc.2 http://<server_ip:3333>/
-* Oracle Java "1.8.0_141" JRE Runtime Environment for Server
+* Oracle Java "1.8.0_162" JDK 
 * Apache Maven 3.5.0
 * Python 3.5.2
 * Other tools: git wget unzip vim python python-setuptools python-dev python-numpy 
@@ -47,6 +47,12 @@ mkdir ./data
 docker run -d --name some-openrefine -v $PWD/data:/data -i -t my/openrefine
 ```
 
+To change the default Java Max Memory used by OpenRefine (useful for processing large dataset)
+```
+Just edit docker.env file with, for example, default to 8192M (8GB memory)
+  
+OPENREFINE_VM_MAX_MEM=8192M
+```
 ## Shell into the Docker instance
 ```bash
 docker exec -it some-openrefine /bin/bash
