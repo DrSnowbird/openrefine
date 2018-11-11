@@ -3,7 +3,8 @@ services:
   openrefine:
     image: openkbs/openrefine
     build:
-      context: ./Dockerfile
+      context: .
+      dockerfile: Dockerfile
     container_name: openrefine
     environment:
       - USER_ID=${USER_ID:-1000}
