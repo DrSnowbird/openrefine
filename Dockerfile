@@ -6,15 +6,15 @@ MAINTAINER OpenKBS <DrSnowbird@openkbs.org>
 #### ---- Environment Vars ----
 ################################
 
-ARG OPENREFINE_VER=${OPENREFINE_VER:-2.7}
+ARG OPENREFINE_VER=${OPENREFINE_VER:-3.1}
 ARG OPENREFINE_PORT=${OPENREFINE_PORT:-3333}
-ARG DATA_DIR=${DATA_DIR:-/data}
-ARG OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM:-16384M}
+ARG DATA_DIR=${DATA_DIR:-${USER}/data}
+ARG OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM:-4096M}
 
 ENV OPENREFINE_VER=${OPENREFINE_VER}
 ENV OPENREFINE_PORT=${OPENREFINE_PORT}
 ENV DATA_DIR=${DATA_DIR}
-ENV OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM:-16384M}
+ENV OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM:-4096M}
 
 ENV SERVERS_HOME=/usr
 
@@ -23,7 +23,7 @@ ENV SERVERS_HOME=/usr
 ################################
 
 ## -- ref: https://github.com/OpenRefine/OpenRefine/releases/
-## https://github.com/OpenRefine/OpenRefine/releases/download/2.7/openrefine-linux-2.7.tar.gz
+## https://github.com/OpenRefine/OpenRefine/releases/download/3.1/openrefine-linux-3.1.tar.gz
 ENV OPENREFINE_URL https://github.com/OpenRefine/OpenRefine/releases/download/${OPENREFINE_VER}/openrefine-linux-${OPENREFINE_VER}.tar.gz
 ENV NER_EXTENSION_URL http://software.freeyourmetadata.org/ner-extension/ner-extension.zip
 
@@ -31,6 +31,8 @@ ENV OPENREFINE_DIR ${SERVERS_HOME}/openrefine
 ENV OPENREFINE_HOME ${SERVERS_HOME}/openrefine/default
 
 ENV PATH $PATH:${OPENREFINE_HOME}
+
+user root
 
 RUN set -x \
     && mkdir -p ${OPENREFINE_DIR} \
@@ -47,7 +49,7 @@ WORKDIR ${OPENREFINE_DIR}
     
 ## -- (opt-2.) Download from Internet: --
 RUN set -x &&\
-    wget -c ${OPENREFINE_URL} && \
+    wget -cq ${OPENREFINE_URL} && \
     tar xvf ${OPENREFINE_DIR}/$(basename ${OPENREFINE_URL}) -C ${OPENREFINE_DIR}/ && \
     ln -s ${OPENREFINE_DIR}/openrefine-${OPENREFINE_VER} ${OPENREFINE_HOME} && \
     ls -al ${OPENREFINE_HOME} 
@@ -57,7 +59,7 @@ RUN rm -f $(basename ${OPENREFINE_DIR})
 ################################
 #### ---- Openrefine Extension ----
 ################################
-#### /usr/openrefine/openrefine-2.7-rc.2/webapp/extensions
+#### /usr/openrefine/openrefine-3.1/webapp/extensions
 RUN set -x &&\
     wget -c ${NER_EXTENSION_URL} && \
     unzip  $(basename ${NER_EXTENSION_URL}) && \
@@ -75,6 +77,7 @@ EXPOSE ${OPENREFINE_PORT}
 #### ---- Entrypoint ----
 ################################
 
+USER ${USER}
 WORKDIR ${DATA_DIR}
 
 COPY entrypoint.sh /
