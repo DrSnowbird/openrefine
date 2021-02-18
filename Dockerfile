@@ -6,7 +6,7 @@ MAINTAINER OpenKBS <DrSnowbird@openkbs.org>
 #### ---- Environment Vars ----
 ################################
 
-ARG OPENREFINE_VER=${OPENREFINE_VER:-3.1}
+ARG OPENREFINE_VER=${OPENREFINE_VER:-3.4.1}
 ARG OPENREFINE_PORT=${OPENREFINE_PORT:-3333}
 ARG DATA_DIR=${DATA_DIR:-${USER}/data}
 ARG OPENREFINE_VM_MAX_MEM=${OPENREFINE_VM_MAX_MEM:-4096M}
@@ -24,7 +24,9 @@ ENV SERVERS_HOME=/usr
 
 ## -- ref: https://github.com/OpenRefine/OpenRefine/releases/
 ## https://github.com/OpenRefine/OpenRefine/releases/download/3.1/openrefine-linux-3.1.tar.gz
+## https://github.com/OpenRefine/OpenRefine/releases/download/3.4.1/openrefine-linux-3.4.1.tar.gz
 ENV OPENREFINE_URL https://github.com/OpenRefine/OpenRefine/releases/download/${OPENREFINE_VER}/openrefine-linux-${OPENREFINE_VER}.tar.gz
+# https://software.freeyourmetadata.org/ner-extension/ner-extension.zip
 ENV NER_EXTENSION_URL http://software.freeyourmetadata.org/ner-extension/ner-extension.zip
 
 ENV OPENREFINE_DIR ${SERVERS_HOME}/openrefine
@@ -54,17 +56,34 @@ RUN set -x &&\
     ln -s ${OPENREFINE_DIR}/openrefine-${OPENREFINE_VER} ${OPENREFINE_HOME} && \
     ls -al ${OPENREFINE_HOME} 
     
-RUN rm -f $(basename ${OPENREFINE_DIR})
+#RUN rm -f $(basename ${OPENREFINE_DIR})
 
 ################################
 #### ---- Openrefine Extension ----
 ################################
+# (see: https://freeyourmetadata.org/named-entity-extraction/)
 #### /usr/openrefine/openrefine-3.1/webapp/extensions
-RUN set -x &&\
-    wget -c ${NER_EXTENSION_URL} && \
-    unzip  $(basename ${NER_EXTENSION_URL}) && \
-    mv named-entity-recognition ${OPENREFINE_DIR}/openrefine-${OPENREFINE_VER}/webapp/extensions && \
-    rm -f ner-extension.zip
+#RUN set -x && \
+#    wget ${NER_EXTENSION_URL} && \
+#    unzip  $(basename ${NER_EXTENSION_URL}) && \
+#    mv named-entity-recognition ${OPENREFINE_DIR}/openrefine-${OPENREFINE_VER}/webapp/extensions && \
+#    rm -f ner-extension.zip
+
+
+#WORKDIR ${OPENREFINE_DIR}
+#RUN echo "OPENREFINE_HOME=${OPENREFINE_HOME}" && \
+#    ls -al ${OPENREFINE_HOME} && \
+#    ls -al ${OPENREFINE_HOME}/webapp/WEB-INF/lib
+
+RUN echo "OPENREFINE_HOME=${OPENREFINE_DIR}/openrefine-${OPENREFINE_VER}/webapp/WEB-INF/lib" && \
+    ls -al ${OPENREFINE_DIR}/openrefine-${OPENREFINE_VER}/webapp/WEB-INF/lib
+
+#### ---- Patch in missing json.org jar file  ----
+ADD lib /usr/openrefine/openrefine-3.4.1/webapp/WEB-INF/lib
+RUN sudo chown ${USER}:${USER} ${OPENREFINE_DIR}/openrefine-${OPENREFINE_VER}/webapp/WEB-INF/lib/json*.jar && \
+    echo " ===> OPENREFINE_HOME=${OPENREFINE_DIR}/openrefine-${OPENREFINE_VER}/webapp/WEB-INF/lib" && \
+    ls -al ${OPENREFINE_DIR}/openrefine-${OPENREFINE_VER}/webapp/WEB-INF/lib
+
 
 ################################
 #### ---- Volume & Port  ----

@@ -16,10 +16,18 @@ if [ $# -lt 1 ]; then
     echo "-------------------------------------------------------------------------------------------"
 fi
 
-MY_DIR=$(dirname "$(readlink -f "$0")")
-
 DOCKERFILE=${1:-./Dockerfile}
-DOCKERFILE=$(realpath $DOCKERFILE)
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    # Linux
+    MY_DIR=$(dirname "$(readlink -f "$0")")
+    DOCKERFILE=$(realpath $DOCKERFILE)
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    # Mac OSX
+    MY_DIR=`pwd`
+else
+    MY_DIR=`pwd`
+fi
+
 BUILD_CONTEXT=$(dirname ${DOCKERFILE})
 
 imageTag=${2}
@@ -157,17 +165,21 @@ echo -e "BUILD_ARGS=> \n ${BUILD_ARGS}"
 echo
 
 ###################################################
-#### ---- Build Container ----
+#### ----------- Build Container ------------ #####
 ###################################################
 
 cd ${BUILD_CONTEXT}
-set -x
+
 sudo docker build ${REMOVE_CACHE_OPTION} -t ${imageTag} \
     ${BUILD_ARGS} \
     ${options} \
     -f $(basename ${DOCKERFILE}) .
-set +x
+
 cd -
+
+###################################################
+#### --------- More Guides for Users -------- #####
+###################################################
 
 echo "----> Shell into the Container in interactive mode: "
 echo "  docker exec -it --name <some-name> /bin/bash"
@@ -188,5 +200,5 @@ echo "----> Build Docker Images again: "
 echo "To build again: (there is a dot at the end of the command!)"
 echo "  docker build -t ${imageTag} . "
 echo
-docker images |grep "$imageTag"
+sudo docker images |grep "$imageTag"
 
